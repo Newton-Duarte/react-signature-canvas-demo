@@ -3,6 +3,7 @@ import SignatureCanvas from "react-signature-canvas";
 import "./styles.css";
 
 export default function App() {
+  const [isDirty, setIsDirty] = useState(false);
   const [imageURL, setImageURL] = useState();
   const sigCanvas = useRef();
 
@@ -18,6 +19,19 @@ export default function App() {
     dlink.click();
   };
 
+  const handleBegin = () => {
+    if (isDirty) return;
+
+    setIsDirty(true);
+    console.log('begin');
+  };
+
+  const handleClear = () => {
+    sigCanvas.current.clear();
+    setImageURL();
+    setIsDirty(false);
+  };
+
   return (
     <div className="App">
       <h1>Hello CodeSandbox</h1>
@@ -26,10 +40,13 @@ export default function App() {
         ref={sigCanvas}
         penColor="black"
         canvasProps={{ className: "sigCanvas" }}
+        onBegin={handleBegin}
       />
-      <button onClick={create}>Save</button>
-      <button onClick={() => sigCanvas.current.clear()}>Clear</button>
-      <button onClick={download}>Download</button>
+      <div>
+        {isDirty && <button onClick={create}>Save</button>}
+        <button onClick={handleClear}>Clear</button>
+        {isDirty && <button onClick={download}>Download</button>}
+      </div>
 
       {imageURL && (
         <>

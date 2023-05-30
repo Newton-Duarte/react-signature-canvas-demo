@@ -4,7 +4,7 @@
 }
 
 .sigCanvas {
-  width: 100%;
+  width: 600px;
   height: 200px;
   border: 2px solid black;
   border-radius: 0.25rem;
