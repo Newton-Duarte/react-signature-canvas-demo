@@ -11,6 +11,13 @@ export default function App() {
     setImageURL(URL);
   };
 
+  const download = () => {
+    const dlink = document.createElement("a");
+    dlink.setAttribute("href", imageURL);
+    dlink.setAttribute("download", "signature.png");
+    dlink.click();
+  };
+
   return (
     <div className="App">
       <h1>Hello CodeSandbox</h1>
@@ -22,6 +29,7 @@ export default function App() {
       />
       <button onClick={create}>Save</button>
       <button onClick={() => sigCanvas.current.clear()}>Clear</button>
+      <button onClick={download}>Download</button>
 
       {imageURL && (
         <>
