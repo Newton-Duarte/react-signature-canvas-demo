@@ -32,6 +32,24 @@ export default function App() {
     setIsDirty(false);
   };
 
+  const send = () => {
+      fetch(imageURL)
+      .then(response => response.blob())
+      .then(blob => {
+          const file = new File([blob], "user-signature.png", {type: blob.type})
+          console.log(file)
+
+          const data = new FormData();
+          data.append('avatar', file);
+
+          fetch('http://localhost:3333/avatar', {
+            method: 'POST',
+            body: data,
+          }).then((res) => res.json())
+          .catch((err) => console.log(err));
+      });
+  };
+
   return (
     <div className="App">
       <h1>Hello CodeSandbox</h1>
@@ -46,6 +64,7 @@ export default function App() {
         {isDirty && <button onClick={create}>Save</button>}
         <button onClick={handleClear}>Clear</button>
         {isDirty && <button onClick={download}>Download</button>}
+        {isDirty && <button onClick={send}>Send</button>}
       </div>
 
       {imageURL && (
